@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import RoomCard from '../components/RoomCard';
 import { firestore } from '../firebase/firestore';
 
-export default function Wait() {
+export default function List() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {

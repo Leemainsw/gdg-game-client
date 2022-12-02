@@ -1,7 +1,8 @@
 import React from 'react';
+import List from './pages/list';
 
 function App() {
-  return <h1>안녕하세요</h1>;
+  return <List />;
 }
 
 export default App;
