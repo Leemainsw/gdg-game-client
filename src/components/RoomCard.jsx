@@ -1,8 +1,9 @@
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
+import React from 'react';
 import { firebase, firestore } from '../firebase/firestore';
 import { getDocumentId } from '../utils/util';
 
-export default function RoomCard({ room }) {
+const RoomCard = ({ room }) => {
   if (!room) return null;
 
   const roomEntranceHandler = () => {
@@ -30,11 +31,17 @@ export default function RoomCard({ room }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={roomEntranceHandler}>
+        <Button
+          size="small"
+          onClick={roomEntranceHandler}
+          disabled={room.users.length === room.peopleCount}
+        >
           입장하기
         </Button>
       </CardActions>
     </Card>
   );
-}
+};
+
+export default React.memo(RoomCard);
 
