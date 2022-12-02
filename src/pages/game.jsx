@@ -69,8 +69,8 @@ export default function Game() {
             {room.users.map(
               (user, index) =>
                 user.uid !== myId && (
-                  <Grid xs={2} key={index} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <GameAvatar uuid={index} user={user} />
+                  <Grid xs={2} key={index} sx={{ display: 'flex', justifyContent: 'center' }} item>
+                    <GameAvatar uuid={user.uid} user={user} />
                   </Grid>
                 )
             )}
