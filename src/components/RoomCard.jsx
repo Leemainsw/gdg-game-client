@@ -1,9 +1,12 @@
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { firebase, firestore } from '../firebase/firestore';
 import { getDocumentId } from '../utils/util';
 
 const RoomCard = ({ room }) => {
+  const navigator = useNavigate();
+
   if (!room) return null;
 
   const roomEntranceHandler = () => {
@@ -17,6 +20,9 @@ const RoomCard = ({ room }) => {
           uid,
           isDead: false,
         }),
+      })
+      .then(() => {
+        navigator(`/wait?roomId=${room.id}`);
       });
   };
 

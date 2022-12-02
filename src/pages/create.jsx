@@ -5,6 +5,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Header from '../components/Header';
 import { firestore } from '../firebase/firestore';
@@ -25,6 +26,7 @@ const TitleStyles = {
 
 export default function Create() {
   const roomId = getDocumentId();
+  const navigator = useNavigate();
   const [name, setName] = useState('');
   const [peopleCount, setPeopleCount] = useState(0);
 
@@ -41,6 +43,10 @@ export default function Create() {
       .then(() => {
         // TODO
         // 대기방으로 가기
+        localStorage.setItem('isHost', true);
+        navigator(`/wait?roomId=${roomId}`, {
+          preventScrollReset: true,
+        });
       })
       .catch((err) => {
         console.log('err', err);
