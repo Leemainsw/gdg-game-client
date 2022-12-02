@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import GameAvatar from '../components/GameAvatar';
+import Header from '../components/Header';
 
 import qs from 'query-string';
 import { firestore } from '../firebase/firestore';
@@ -84,6 +85,7 @@ export default function Game() {
   return (
     <>
       <Container maxWidth="sm" sx={ContainerStyles}>
+        <Header />
         <Stack direction="column" justifyContent="space-evenly" sx={{ height: '100vh' }}>
           <Typography variant="h4" sx={TitleStyles}>
             {room.name}
