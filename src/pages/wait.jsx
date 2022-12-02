@@ -94,7 +94,13 @@ export default function Wait() {
         </Stack>
         {/* 방장은 시작, 유저들 준비하기, 대기 중 */}
         {isHost() ? (
-          <Button variant="contained" fullWidth sx={ButtonStyles} onClick={startHandler}>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={ButtonStyles}
+            onClick={startHandler}
+            disabled={room.users.length <= 1}
+          >
             시작하기
           </Button>
         ) : (

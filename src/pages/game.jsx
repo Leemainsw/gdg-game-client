@@ -56,6 +56,30 @@ export default function Game() {
     });
   };
 
+  const getResult = () => {
+    const values = room.users.map((ele) => ele.value);
+    const setValues = new Set(values);
+    if (setValues.size !== 2) return '비겼습니다.';
+    if (!setValues.has('P')) {
+      if (myValue === 'R') {
+        return '이겼습니다.';
+      }
+      return '졌습니다.';
+    }
+    if (!setValues.has('R')) {
+      if (myValue === 'S') {
+        return '이겼습니다.';
+      }
+      return '졌습니다.';
+    }
+    if (!setValues.has('S')) {
+      if (myValue === 'P') {
+        return '이겼습니다.';
+      }
+      return '졌습니다.';
+    }
+  };
+
   if (!room) return null;
   return (
     <>
@@ -105,7 +129,7 @@ export default function Game() {
               </>
             ) : (
               <>
-                <h1>결과 기다리는 중</h1>
+                <h1>{getResult()}</h1>
               </>
             )}
           </Stack>
