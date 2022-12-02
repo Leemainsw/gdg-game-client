@@ -35,16 +35,14 @@ export default function Wait() {
   const [room, setRoom] = useState();
   const searchParams = useLocation().search;
 
-  const isHost = () => {
-    return localStorage.getItem('isHost') === 'true';
-  };
+  const isHost = () => localStorage.getItem('isHost') === 'true';
 
   useEffect(() => {
     const query = qs.parse(searchParams);
-    const roomId = query.roomId;
+    const { roomId } = query;
 
     firestore
-      .collection(`rooms`)
+      .collection('rooms')
       .doc(roomId)
       .onSnapshot((d) => {
         const tmp = { id: d.id, ...d.data() };
@@ -57,16 +55,16 @@ export default function Wait() {
 
   const copyLink = () => {
     const query = qs.parse(searchParams);
-    const roomId = query.roomId;
-    const url = process.env.REACT_APP_DEFAULT_URL + `?roomId=${roomId}`;
+    const { roomId } = query;
+    const url = `${process.env.REACT_APP_DEFAULT_URL}?roomId=${roomId}`;
     navigator.clipboard.writeText(url);
   };
 
   const startHandler = () => {
     const query = qs.parse(searchParams);
-    const roomId = query.roomId;
+    const { roomId } = query;
 
-    firestore.collection(`rooms`).doc(roomId).update({
+    firestore.collection('rooms').doc(roomId).update({
       isStart: true,
     });
   };

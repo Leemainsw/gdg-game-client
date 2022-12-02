@@ -31,6 +31,8 @@ export default function Create() {
   const [peopleCount, setPeopleCount] = useState(0);
 
   const create = () => {
+    const uid = getDocumentId();
+    localStorage.setItem('uid', uid);
     firestore
       .collection('rooms')
       .doc(roomId)
@@ -38,7 +40,12 @@ export default function Create() {
         name,
         peopleCount: Number(peopleCount),
         dateCreated: new Date().toISOString(),
-        users: [],
+        users: [
+          {
+            uid,
+            isDead: false,
+          },
+        ],
       })
       .then(() => {
         // TODO
