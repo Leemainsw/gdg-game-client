@@ -29,7 +29,7 @@ const RoomCard = ({ room }) => {
   return (
     <Card
       style={{
-        marginTop: 20,
+        margin: '2rem 0',
         borderRadius: '1rem',
         boxShadow:
           '0px 156px 62px rgba(0, 0, 0, 0.01), 0px 88px 53px rgba(0, 0, 0, 0.05), 0px 39px 39px rgba(0, 0, 0, 0.05), 0px 10px 21px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05)',
