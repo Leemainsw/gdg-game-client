@@ -27,7 +27,14 @@ const RoomCard = ({ room }) => {
   };
 
   return (
-    <Card style={{ marginTop: 20 }}>
+    <Card
+      style={{
+        marginTop: 20,
+        borderRadius: '1rem',
+        boxShadow:
+          '0px 156px 62px rgba(0, 0, 0, 0.01), 0px 88px 53px rgba(0, 0, 0, 0.05), 0px 39px 39px rgba(0, 0, 0, 0.05), 0px 10px 21px rgba(0, 0, 0, 0.05), 0px 0px 0px rgba(0, 0, 0, 0.05)',
+      }}
+    >
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {room.name}
@@ -41,6 +48,7 @@ const RoomCard = ({ room }) => {
           size="small"
           onClick={roomEntranceHandler}
           disabled={room.users.length === room.peopleCount}
+          fullWidth
         >
           입장하기
         </Button>
