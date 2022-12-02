@@ -17,4 +17,4 @@ firebase.initializeApp(firebaseConfig);
 // firebase의 firestore 인스턴스를 변수에 저장
 const firestore = firebase.firestore();
 
-export { firestore };
+export { firestore, firebase };
