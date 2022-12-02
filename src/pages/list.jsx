@@ -30,7 +30,7 @@ export default function List() {
       <Fab
         color="primary"
         aria-label="add"
-        style={{ position: 'absolute', right: '10px', bottom: '10px' }}
+        style={{ position: 'fixed', right: '1rem', bottom: '2rem' }}
         onClick={goCreate}
       >
         <AddIcon />
