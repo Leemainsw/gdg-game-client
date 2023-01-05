@@ -1,29 +1,25 @@
 import { Button, Card, CardActions, CardContent, Typography } from '@mui/material';
+import { arrayUnion } from 'firebase/firestore';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { firebase, firestore } from '../firebase/firestore';
-import { getDocumentId } from '../utils/util';
+import { updateDocument } from '../firebase';
+import { localSaveUid } from '../utils/util';
 
 const RoomCard = ({ room }) => {
   const navigator = useNavigate();
+  const { id: roomId } = room;
 
   if (!room) return null;
 
   const roomEntranceHandler = () => {
-    const uid = getDocumentId();
-    localStorage.setItem('uid', uid);
-    firestore
-      .collection('rooms')
-      .doc(room.id)
-      .update({
-        users: firebase.firestore.FieldValue.arrayUnion({
-          uid,
-          isDead: false,
-        }),
-      })
-      .then(() => {
-        navigator(`/wait?roomId=${room.id}`);
-      });
+    updateDocument(`rooms/${roomId}`, {
+      users: arrayUnion({
+        uid: localSaveUid(),
+        isDead: false,
+      }),
+    })
+      .then(() => navigator(`/wait?roomId=${roomId}`))
+      .catch((err) => console.log(err));
   };
 
   return (

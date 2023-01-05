@@ -4,11 +4,11 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { arrayUnion } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import Header from '../components/Header';
-import { firestore } from '../firebase/firestore';
+import { setDocument } from '../firebase';
 import { getDocumentId } from '../utils/util';
 
 const ContainerStyles = {
@@ -33,23 +33,16 @@ export default function Create() {
   const create = () => {
     const uid = getDocumentId();
     localStorage.setItem('uid', uid);
-    firestore
-      .collection('rooms')
-      .doc(roomId)
-      .set({
-        name,
-        peopleCount: Number(peopleCount),
-        dateCreated: new Date().toISOString(),
-        users: [
-          {
-            uid,
-            isDead: false,
-          },
-        ],
-      })
+    setDocument(`rooms/${roomId}`, {
+      name,
+      peopleCount: Number(peopleCount),
+      dateCreated: new Date().toISOString(),
+      users: arrayUnion({
+        uid,
+        isDead: false,
+      }),
+    })
       .then(() => {
-        // TODO
-        // 대기방으로 가기
         localStorage.setItem('isHost', true);
         navigator(`/wait?roomId=${roomId}`, {
           preventScrollReset: true,
