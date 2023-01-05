@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import qs from 'query-string';
 import Header from '../components/Header';
-import { firestore } from '../firebase/firestore';
+import { readDoc, updateDocument } from '../firebase';
 
 const ContainerStyles = {
   width: '100%',
@@ -41,17 +41,13 @@ export default function Wait() {
     const query = qs.parse(searchParams);
     const { roomId } = query;
 
-    firestore
-      .collection('rooms')
-      .doc(roomId)
-      .onSnapshot((d) => {
-        const tmp = { id: d.id, ...d.data() };
-        setRoom(tmp);
-        if (tmp && tmp.isStart) {
-          navigator(`/game?roomId=${tmp.id}`);
-        }
-      });
-  }, []);
+    readDoc(`rooms/${roomId}`).subscribe((data) => {
+      setRoom(data);
+      if (data && data.isStart) {
+        navigator(`/game?roomId=${data.id}`);
+      }
+    });
+  }, [searchParams]);
 
   const copyLink = () => {
     const query = qs.parse(searchParams);
@@ -64,7 +60,7 @@ export default function Wait() {
     const query = qs.parse(searchParams);
     const { roomId } = query;
 
-    firestore.collection('rooms').doc(roomId).update({
+    updateDocument(`rooms/${roomId}`, {
       isStart: true,
     });
   };

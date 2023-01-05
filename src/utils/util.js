@@ -8,4 +8,11 @@ function getDocumentId () {
   return res;
 }
 
-export { getDocumentId };
+const localSaveUid = () => {
+  const uid = getDocumentId();
+  localStorage.setItem('uid', uid);
+  
+  return uid;
+}
+
+export { getDocumentId, localSaveUid };

@@ -3,17 +3,15 @@ import { Container, Fab } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RoomCard from '../components/RoomCard';
-import { firestore } from '../firebase/firestore';
+import { readCollection } from '../firebase';
 
 export default function List() {
   const [rooms, setRooms] = useState([]);
   const navigator = useNavigate();
 
   useEffect(() => {
-    firestore.collection('rooms').onSnapshot((d) => {
-      if (d.docs) {
-        setRooms(d.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      }
+    readCollection(`rooms`).subscribe((datas) => {
+      setRooms(datas);
     });
   }, []);
 
@@ -23,10 +21,8 @@ export default function List() {
 
   return (
     <Container>
-      <h1>게임 방 리스트</h1>
-      {rooms.map((room) => (
-        <RoomCard key={room.id} room={room} />
-      ))}
+      <h1>✌️👊🖐 게임방 리스트</h1>
+      {rooms && rooms.map((room) => <RoomCard key={room.id} room={room} />)}
       <Fab
         color="primary"
         aria-label="add"

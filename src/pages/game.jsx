@@ -5,8 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import GameAvatar from '../components/GameAvatar';
 import Header from '../components/Header';
 
+import { updateDoc } from 'firebase/firestore';
 import qs from 'query-string';
-import { firestore } from '../firebase/firestore';
+import { readDoc } from '../firebase';
 
 const ContainerStyles = {
   width: '100%',
@@ -33,14 +34,10 @@ export default function Game() {
     const query = qs.parse(searchParams);
     const { roomId } = query;
 
-    firestore
-      .collection('rooms')
-      .doc(roomId)
-      .onSnapshot((d) => {
-        const tmp = { id: d.id, ...d.data() };
-        setRoom(tmp);
-      });
-  }, []);
+    readDoc(`rooms/${roomId}`).subscribe((data) => {
+      setRoom(data);
+    });
+  }, [searchParams]);
 
   const isAllChecked = () => {
     return room.users.some((ele) => ele.value == null);
@@ -52,7 +49,7 @@ export default function Game() {
     const userIndex = room.users.findIndex((ele) => ele.uid === uid);
     const tmp = room.users.slice();
     tmp[userIndex].value = type;
-    firestore.collection('rooms').doc(room.id).update({
+    updateDoc(`rooms/${room.id}`, {
       users: tmp,
     });
   };
