@@ -44,10 +44,14 @@ export default function Wait() {
     readDoc(`rooms/${roomId}`).subscribe((data) => {
       setRoom(data);
       if (data && data.isStart) {
-        navigator(`/game?roomId=${data.id}`);
+        goGameRoom(data.id);
       }
     });
   }, [searchParams]);
+
+  const goGameRoom = (roomId) => {
+    navigator(`/game?roomId=${roomId}`);
+  };
 
   const copyLink = () => {
     const query = qs.parse(searchParams);
