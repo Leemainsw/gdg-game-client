@@ -11,8 +11,11 @@ function getDocumentId () {
 const localSaveUid = () => {
   const uid = getDocumentId();
   localStorage.setItem('uid', uid);
-  
   return uid;
 }
 
-export { getDocumentId, localSaveUid };
+const getUid = () => {
+  return localStorage.getItem('uid') || ''; 
+}
+
+export { getDocumentId, localSaveUid, getUid };

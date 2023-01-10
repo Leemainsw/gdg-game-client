@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import { setDocument } from '../firebase';
-import { getDocumentId } from '../utils/util';
+import { getDocumentId, getUid } from '../utils/util';
 
 const ContainerStyles = {
   width: '100%',
@@ -31,8 +31,7 @@ export default function Create() {
   const [peopleCount, setPeopleCount] = useState(0);
 
   const create = () => {
-    const uid = getDocumentId();
-    localStorage.setItem('uid', uid);
+    const uid = getUid();
     setDocument(`rooms/${roomId}`, {
       name,
       peopleCount: Number(peopleCount),

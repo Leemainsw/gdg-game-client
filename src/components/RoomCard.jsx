@@ -3,7 +3,7 @@ import { arrayUnion } from 'firebase/firestore';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { updateDocument } from '../firebase';
-import { localSaveUid } from '../utils/util';
+import { getUid } from '../utils/util';
 
 const RoomCard = ({ room }) => {
   const navigator = useNavigate();
@@ -14,7 +14,7 @@ const RoomCard = ({ room }) => {
   const roomEntranceHandler = () => {
     updateDocument(`rooms/${roomId}`, {
       users: arrayUnion({
-        uid: localSaveUid(),
+        uid: getUid(),
         isDead: false,
       }),
     })
