@@ -9,7 +9,7 @@ import Game from './pages/game';
 import Wait from './pages/wait';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { localSaveUid } from './utils/util';
+import { setUid } from './utils/util';
 
 const theme = createTheme({
   palette: {
@@ -23,7 +23,7 @@ const theme = createTheme({
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-localSaveUid();
+setUid();
 
 root.render(
   <ThemeProvider theme={theme}>
